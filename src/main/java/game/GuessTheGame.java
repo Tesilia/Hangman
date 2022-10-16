@@ -15,8 +15,12 @@ public class GuessTheGame {
     public void start(){
         do{
             showWord();
-            getInput();
-            checkInput();
+            boolean isValid = getInput();
+            if (isValid) {
+                checkInput();
+            }else{
+                System.out.println("Enter a letter to guess the word: ");
+            }
         }while(play);
     }
 
@@ -25,13 +29,15 @@ public class GuessTheGame {
         System.out.println(randomWord);
     }
 
-    void getInput(){
+    boolean getInput(){
         System.out.println("Enter a letter to guess the word: ");
         String userGuess = scanner.nextLine();
-        lastRound = userGuess.toLowerCase().charAt(0);
-
+        if(!userGuess.isEmpty() && userGuess.length()==1){
+            lastRound = userGuess.toLowerCase().charAt(0);
+            return true;
+        }
+        return false;
     }
-    //FixMe: Leerzeichen von der Eingabe löschen
     void checkInput(){
         boolean isGuessedRight = randomWord.guess(lastRound);
 

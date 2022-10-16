@@ -22,7 +22,6 @@ public class Words {
         while(scanner.hasNextLine()){
             words.add(scanner.nextLine().toString());
         }
-        System.out.println("Größe der Liste: " + words.size());
         selectedWord = words.get(random.nextInt(words.size()));
         scanner.close();
         letters = new char[selectedWord.length()];
@@ -58,8 +57,9 @@ public class Words {
     }
 
     public boolean isGuessedRight(){
-        for(char letter : letters){
-            if(letter == '\u0000'){
+        String[] letters2 = selectedWord.split("");
+        for(int i = 0; i < letters.length; i++){
+            if(letters[i] == '\u0000' && letters2[i].charAt(0) != ' '){
                 return false;
             }
         }
