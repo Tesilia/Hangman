@@ -14,10 +14,9 @@ public class Words {
     private Random random = new Random();
     private char[] letters;
 
-    public Words() throws FileNotFoundException{
-        File file = new File("src/main/resources/marvelWords.txt");
-        if(!file.exists()){
-            throw new FileNotFoundException();
+    public Words(File file) throws NullPointerException, FileNotFoundException {
+        if(file == null || !file.exists()){
+            throw new NullPointerException();
         }else {
             Scanner scanner = new Scanner(file);
             words = new ArrayList<>();
