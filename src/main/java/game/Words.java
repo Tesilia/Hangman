@@ -1,6 +1,5 @@
 package game;
 
-import com.github.dhiraj072.randomwordgenerator.RandomWordGenerator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,58 +13,70 @@ public class Words {
     private List<String> words;
     private Random random = new Random();
     private char[] letters;
-    File file = new File("src/main/resources/marvelWords.txt");
 
-    public Words() throws FileNotFoundException {
-        words = new ArrayList<>();
-        Scanner scanner = new Scanner(file);
-        while(scanner.hasNextLine()){
-            words.add(scanner.nextLine().toString());
-        }
-        selectedWord = words.get(random.nextInt(words.size()));
-        scanner.close();
-        letters = new char[selectedWord.length()];
-
-    }
-    public String toString(){
-
-        StringBuilder text = new StringBuilder();
-        String[] letters2 = selectedWord.split("");
-        for(int i = 0; i < letters.length; i++){
-            if(letters[i] == '\u0000'){
-                text.append(letters2[i].charAt(0) == ' ' ? ' ' : '-');
-            }else{
-                text.append(letters[i]);
+    public Words() throws FileNotFoundException{
+        File file = new File("src/main/resources/marvelWords.txt");
+        if(!file.exists()){
+            throw new FileNotFoundException();
+        }else {
+            Scanner scanner = new Scanner(file);
+            words = new ArrayList<>();
+            while (scanner.hasNextLine()) {
+                words.add(scanner.nextLine().toString());
             }
-            text.append(' ');
+            selectedWord = words.get(random.nextInt(words.size()));
+            scanner.close();
+            letters = new char[selectedWord.length()];
         }
-        return text.toString();
+    }
+    public String toString() throws NullPointerException{
+        if(selectedWord == null) {
+            throw new NullPointerException();
+        }else{
+            StringBuilder text = new StringBuilder();
+            String[] letters2 = selectedWord.split("");
+            for(int i = 0; i < letters.length; i++){
+                if(letters[i] == '\u0000'){
+                    text.append(letters2[i].charAt(0) == ' ' ? ' ' : '-');
+                }else{
+                    text.append(letters[i]);
+                }
+                text.append(' ');
+            }
+            return text.toString();
+        }
     }
 
-    public boolean guess(char letter) {
-        boolean guessedRight = false;
-        for( int i = 0; i < selectedWord.length(); i++){
-            if(letter == selectedWord.charAt(i)){
-                letters[i] = letter;
-                guessedRight = true;
-            }if (Character.toUpperCase(letter) == selectedWord.charAt(i) ){
-                letters[i] = Character.toUpperCase(letter);
-                guessedRight = true;
+    public boolean guess(char letter) throws NullPointerException {
+        if( selectedWord == null) {
+            throw new NullPointerException();
+        }else{
+            boolean guessedRight = false;
+            for (int i = 0; i < selectedWord.length(); i++) {
+                if (letter == selectedWord.charAt(i)) {
+                    letters[i] = letter;
+                    guessedRight = true;
+                }
+                if (Character.toUpperCase(letter) == selectedWord.charAt(i)) {
+                    letters[i] = Character.toUpperCase(letter);
+                    guessedRight = true;
+                }
             }
+            return guessedRight;
         }
-        return guessedRight;
     }
 
-    public boolean isGuessedRight(){
-        String[] letters2 = selectedWord.split("");
-        for(int i = 0; i < letters.length; i++){
-            if(letters[i] == '\u0000' && letters2[i].charAt(0) != ' '){
-                return false;
+    public boolean isGuessedRight() throws NullPointerException{
+        if( selectedWord == null){
+            throw new NullPointerException();
+        }else {
+            String[] letters2 = selectedWord.split("");
+            for (int i = 0; i < letters.length; i++) {
+                if (letters[i] == '\u0000' && letters2[i].charAt(0) != ' ') {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
-    public String getSelectedWord() {
-        return selectedWord;
     }
 }

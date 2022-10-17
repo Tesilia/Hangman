@@ -9,10 +9,12 @@ public class GuessTheGame {
     private Scanner scanner = new Scanner((System.in));
     private int rounds = 10;
     private char lastRound;
+
+    private StringBuilder triedguesses = new StringBuilder().append(" ");
     public GuessTheGame() throws FileNotFoundException {
     }
 
-    public void start(){
+    public void start() throws FileNotFoundException {
         do{
             showWord();
             boolean isValid = getInput();
@@ -24,19 +26,25 @@ public class GuessTheGame {
         }while(play);
     }
 
-    void showWord(){
-        System.out.println("You have " + rounds + " left.");
-        System.out.println(randomWord);
+    void showWord() throws FileNotFoundException {
+        if(randomWord == null){
+            throw new FileNotFoundException();
+        }else {
+            System.out.println(rounds == 1 ? "You have " + rounds + " chance left." : "You have " + rounds + " chances left.");
+            System.out.println(randomWord);
+        }
     }
 
     boolean getInput(){
         System.out.println("Enter a letter to guess the word: ");
         String userGuess = scanner.nextLine();
-        if(!userGuess.isEmpty() && userGuess.length()==1){
+        if(userGuess.length()==1){
             lastRound = userGuess.toLowerCase().charAt(0);
             return true;
+        }else {
+            System.out.println("\'" + userGuess + "\'" + " is not a valid input. Please enter a letter or a digit.");
+            return false;
         }
-        return false;
     }
     void checkInput(){
         boolean isGuessedRight = randomWord.guess(lastRound);
@@ -49,12 +57,15 @@ public class GuessTheGame {
             }
         }else{
             rounds--;
+            if(!triedguesses.isEmpty() && triedguesses.toString().indexOf(lastRound) == -1) {
+                triedguesses.append(lastRound + " ");
+            }
             if(rounds == 0){
                 System.out.println("Game OVER!");
                 play = false;
             }
         }
-
+        System.out.println("You already tried: " + triedguesses.toString());
     }
 
     public void end() {
