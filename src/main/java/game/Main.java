@@ -1,21 +1,19 @@
 package game;
 
-import java.io.FileNotFoundException;
-
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
+
+        String easyLevel = "src/main/java/game/easy.json";
+        String mediumLevel = "src/main/java/game/medium.json";
+        String hardLevel = "src/main/java/game/hard.json";
         try{
-            String easy ="src/main/java/game/easy.json";
-            String medium = "src/main/java/game/medium.json";
-            String hard = "src/main/java/game/hard.json";
-            Settings settings = new Settings(easy);
+            Settings settings = new Settings(mediumLevel);
             GuessTheGame game = new GuessTheGame(settings);
 
             game.start();
             game.end();
-        }catch (Exception e){
+        }catch( Exception e){
             e.printStackTrace();
         }
-
     }
 }

@@ -1,0 +1,9 @@
+[
+  {
+    "setting": {
+      "rounds": 15,
+      "file": "src/main/resources/marvelWords.txt",
+      "punishment": false
+    }
+  }
+]

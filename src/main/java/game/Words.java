@@ -9,29 +9,28 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Words {
-    private String selectedWord;
-    private List<String> words;
-    private Random random = new Random();
-    private char[] letters;
+    private final String selectedWord;
+    private final char[] letters;
 
-    public Words(File file) throws NullPointerException, FileNotFoundException {
-        if(file == null || !file.exists()){
-            throw new NullPointerException();
-        }else {
+    public Words(File file) throws Exception {
+        if(file == null) throw new NullPointerException("File is null.");
+        if(!file.exists()) throw new FileNotFoundException("File not found");
+        if(file.length()==0) throw new Exception("File is empty.");
+        else {
             Scanner scanner = new Scanner(file);
-            words = new ArrayList<>();
+            List<String> words = new ArrayList<>();
             while (scanner.hasNextLine()) {
                 words.add(scanner.nextLine().toString());
             }
+            Random random = new Random();
             selectedWord = words.get(random.nextInt(words.size()));
             scanner.close();
             letters = new char[selectedWord.length()];
         }
     }
     public String toString() throws NullPointerException{
-        if(selectedWord == null) {
-            throw new NullPointerException();
-        }else{
+        if(selectedWord == null) throw new NullPointerException();
+        else{
             StringBuilder text = new StringBuilder();
             String[] letters2 = selectedWord.split("");
             for(int i = 0; i < letters.length; i++){
@@ -47,9 +46,8 @@ public class Words {
     }
 
     public boolean guess(char letter) throws NullPointerException {
-        if( selectedWord == null) {
-            throw new NullPointerException();
-        }else{
+        if( selectedWord == null ) throw new NullPointerException();
+        else{
             boolean guessedRight = false;
             for (int i = 0; i < selectedWord.length(); i++) {
                 if (letter == selectedWord.charAt(i)) {
@@ -66,16 +64,19 @@ public class Words {
     }
 
     public boolean isGuessedRight() throws NullPointerException{
-        if( selectedWord == null){
-            throw new NullPointerException();
-        }else {
+        if( selectedWord == null)throw new NullPointerException();
+        else {
             String[] letters2 = selectedWord.split("");
             for (int i = 0; i < letters.length; i++) {
-                if (letters[i] == '\u0000' && letters2[i].charAt(0) != ' ') {
+                if ((letters[i] == '\u0000' && letters2[i].charAt(0) != ' ') &&  (letters[i] == '\u0000' && letters2[i].charAt(0) != '-')) {
                     return false;
                 }
             }
             return true;
         }
+    }
+
+    public String getWord(){
+        return selectedWord;
     }
 }

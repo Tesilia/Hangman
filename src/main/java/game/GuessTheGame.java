@@ -7,19 +7,18 @@ import java.util.Scanner;
 public class GuessTheGame {
     private boolean play = true;
     private Words randomWord;
-    private Scanner scanner = new Scanner((System.in));
+    private final Scanner scanner = new Scanner((System.in));
     private int rounds;
     private boolean punishDoubleInput;
     private File file;
     private char lastRound;
+    private final StringBuilder triedGuesses = new StringBuilder().append(" ");
 
-    private StringBuilder triedguesses = new StringBuilder().append(" ");
-    public GuessTheGame(Settings setting) throws FileNotFoundException {
+    public GuessTheGame(Settings setting) throws NullPointerException, FileNotFoundException, Exception {
         rounds = setting.getRounds();
         punishDoubleInput = setting.getPunishDoubleInput();
         file = setting.getFile();
         randomWord = new Words(file);
-
     }
 
     public void start() throws FileNotFoundException {
@@ -49,7 +48,7 @@ public class GuessTheGame {
         if(userGuess.length()==1){
             lastRound = userGuess.toLowerCase().charAt(0);
             return true;
-        }else {
+        } else {
             System.out.println("\'" + userGuess + "\'" + " is not a valid input. Please enter a letter or a digit.");
             return false;
         }
@@ -67,19 +66,19 @@ public class GuessTheGame {
             if( punishDoubleInput){
                 rounds--;
             }else{
-                if(triedguesses.toString().indexOf(lastRound) == -1){
+                if(triedGuesses.toString().indexOf(lastRound) == -1){
                     rounds--;
                 }
             }
-            if(!triedguesses.isEmpty() && triedguesses.toString().indexOf(lastRound) == -1) {
-                triedguesses.append(lastRound + " ");
+            if(!triedGuesses.isEmpty() && triedGuesses.toString().indexOf(lastRound) == -1) {
+                triedGuesses.append(lastRound + " ");
             }
             if(rounds == 0){
                 System.out.println("Game OVER!");
                 play = false;
             }
         }
-        System.out.println("You already tried: " + triedguesses.toString());
+        System.out.println("You already tried: " + triedGuesses.toString());
     }
 
     public void end() {
