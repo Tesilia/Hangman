@@ -1,5 +1,11 @@
 plugins {
-    id 'java'
+    id 'application'
+}
+
+apply plugin : "java"
+
+application {
+    mainClassName = "game.Main"
 }
 
 group 'game'
@@ -16,6 +22,16 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
+}
+
+run {
+    standardInput = System.in
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'game.Main'
+    }
 }
 
 test {
