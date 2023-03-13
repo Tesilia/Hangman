@@ -14,19 +14,10 @@ public class Settings {
     private boolean punishDoubleInput;
 
     public Settings(String filename) throws Exception {
-        if (filename == null) throw new NullPointerException("File is null.");
         File file = new File((filename));
         if (!file.exists()) throw new FileNotFoundException("File not found.");
         if(file.length()==0) throw new Exception("File is empty.");
-        try{
-            if (filename.contains("easy")) System.out.println("You choose the easy Strategy!");
-            if (filename.contains("medium")) System.out.println("You choose the medium Strategy!");
-            if (filename.contains("hard")) System.out.println("You choose the hard Strategy!");
-
-            readFromJson(file);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        readFromJson(file);
     }
 
     private void readFromJson(File file){
@@ -58,7 +49,7 @@ public class Settings {
 
             // get setting-attribute filename
             String filename = (String) settingObject.get("file");
-            file = new File(filename);
+            setFile(new File(filename));
 
             // get setting-attribute punishment for double input
             punishDoubleInput = (boolean) settingObject.get("punishment");
@@ -73,6 +64,10 @@ public class Settings {
 
     File getFile(){
         return file;
+    }
+
+    private void setFile(File file){
+        this.file = file;
     }
 
     boolean getPunishDoubleInput(){

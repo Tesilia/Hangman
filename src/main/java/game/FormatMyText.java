@@ -2,8 +2,6 @@ package game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
@@ -17,7 +15,7 @@ public class FormatMyText {
         }
         scanner.close();
 
-        List<String> words = Arrays.asList(text.split(", "));
+        String[] words = text.split(", ");
 
         PrintWriter out = new PrintWriter("src/main/resources/marvelWords.txt");
         for(String elem : words){

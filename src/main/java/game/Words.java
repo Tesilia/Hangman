@@ -1,6 +1,5 @@
 package game;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class Words {
             Scanner scanner = new Scanner(file);
             List<String> words = new ArrayList<>();
             while (scanner.hasNextLine()) {
-                words.add(scanner.nextLine().toString());
+                words.add(scanner.nextLine());
             }
             Random random = new Random();
             selectedWord = words.get(random.nextInt(words.size()));
@@ -49,6 +48,7 @@ public class Words {
         if( selectedWord == null ) throw new NullPointerException();
         else{
             boolean guessedRight = false;
+            letter = Character.toLowerCase(letter);
             for (int i = 0; i < selectedWord.length(); i++) {
                 if (letter == selectedWord.charAt(i)) {
                     letters[i] = letter;
