@@ -1,0 +1,9 @@
+[
+  {
+    "setting": {
+      "rounds": 15,
+      "file": "src/test/resources/testWords2.txt",
+      "punishment": false
+    }
+  }
+]
