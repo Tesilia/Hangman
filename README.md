@@ -3,6 +3,17 @@
 This repository contains a Java implementation of the game HANGMAN consisting of words from the MARVEL Universe. 
 The list will be updated at a later point in time.
 
+### **Run code in console:**
+
+1. `git clone git@github.com:Tesilia/Hangman.git`
+
+2. `cd Hangman`
+
+3. `./gradlew run`
+---
+
+
+
 >You can choose between three levels: 
 
 **(1) easy:**
